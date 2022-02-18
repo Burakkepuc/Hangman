@@ -19,7 +19,7 @@ class Word
     @word = @dictionary.select { |word| word.length >= 5 && word.length <= 12 }.sample
   end
 
-  def split_word
+  def split_words
     @word.split('')
   end
 end
