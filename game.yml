@@ -9895,21 +9895,21 @@ word: !ruby/object:Word
   - mediawiki
   - configurations
   - poison
-  word: prison
+  word: organ
+chosen_word: organ
 split_words:
-- p
-- r
-- i
-- s
 - o
+- r
+- g
+- a
 - n
 incorrect_guess: 0
 length: 1
 guess_array:
-- p
+- o
 - r
-- i
-- s
+- g
+- a
 - _
-- n
+game: 1
 guess: save

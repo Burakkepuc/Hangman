@@ -3,12 +3,15 @@ require 'pry-byebug'
 require 'json'
 # Game class to play game.
 class Game
+  attr_reader :length, :incorrect_guess, :word, :split_words, :chosen_word, :guess_array
+
   def initialize
     @word = Word.new
-    p @word.chose_word
-    p @split_words = @word.split_word
+   p @chosen_word = @word.chose_word
+   p @split_words = @word.split_word
     @incorrect_guess = 0
     @length = @split_words.length
+    make_dashes
   end
 
   # To make array occurs dashes(_____)
@@ -60,9 +63,17 @@ class Game
 
   def deserialize
     File.open('game.yml', 'r') do |f|
-      p YAML.load(f)
+      loaded_game = YAML.load(f)
+      @guess_array = loaded_game.guess_array
+      @split_words = loaded_game.split_words
+      @chosen_word = loaded_game.chosen_word
+      @incorrect_guess = loaded_game.incorrect_guess
+      @length = loaded_game.length
+
+      p @chosen_word
+      p @guess_array
+      loaded_game.guess
     end
-    # p file['word']
   end
 
   # This method takes input, If save written, save game and exit
@@ -82,7 +93,6 @@ class Game
 
   # Main algorithm to check our guess inputs.
   def guess
-    make_dashes
     print_dashes
     counter = 0
     until counter == @split_words.length || finished? == true
@@ -98,9 +108,9 @@ class Game
   def play
     puts '1) New Game'
     puts '2) Load Game'
-    game = gets.chomp.downcase.to_i
+    @game = gets.chomp.downcase.to_i
 
-    case game
+    case @game
     when 1
       guess
     when 2
