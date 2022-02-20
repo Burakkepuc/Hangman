@@ -9896,21 +9896,29 @@
     - mediawiki
     - configurations
     - poison
-    word: vector
+    word: treatments
   split_words:
-  - v
-  - e
-  - c
   - t
-  - o
   - r
-  incorrect_guess: 0
-  length: 3
-  guess_array:
-  - v
   - e
-  - c
+  - a
+  - t
+  - m
+  - e
+  - n
+  - t
+  - s
+  incorrect_guess: 0
+  length: 6
+  guess_array:
+  - t
+  - r
+  - e
+  - a
+  - t
   - _
+  - e
   - _
+  - t
   - _
   guess: save

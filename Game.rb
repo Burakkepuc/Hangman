@@ -1,5 +1,6 @@
 require_relative 'Word.rb'
 require 'pry-byebug'
+require 'json'
 # Game class to play game.
 class Game
   def initialize
@@ -49,20 +50,18 @@ class Game
   end
 
   def serialize
-  File.open('game.yml','w') do |f| 
-      YAML.dump([] << self, f) 
+    file = File.open('game.yml', 'w') do |f|
+      YAML.dump(self, f)
     end
+    file.close
     exit
   end
 
-  # def load_game
-  #   begin
-  #     yaml = YAML.load_file("./game.yml")
-  #     @history = yaml[0].history
-  #   rescue
-  #     @history = []
-  #   end
-  # end
+  def deserialize
+    File.open('game.yml', 'r') do |f|
+      p YAML.load(f)
+    end
+  end
 
   def take_guess
     puts 'Please enter a valid guess [a-z]'
@@ -90,7 +89,22 @@ class Game
       print_dashes
     end
   end
+
+  def play
+    puts '1) New Game'
+    puts '2) Load Game'
+    game = gets.chomp.downcase.to_i
+
+    case game
+    when 1
+      guess
+    when 2
+      deserialize
+    else
+      "Wrong choice"
+    end
+  end
 end
 
 game = Game.new
-game.guess
+game.play
