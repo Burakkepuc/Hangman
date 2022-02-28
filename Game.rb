@@ -1,18 +1,12 @@
 require_relative 'Word.rb'
-require 'pry-byebug'
-require 'json'
+require 'yaml'
 # Game class to play game.
 class Game
   attr_reader :length, :incorrect_guess, :word, :split_words, :chosen_word, :guess_array
 
-  @@length = 0
   def initialize
     @word = Word.new
-    @chosen_word = @word.chose_word
-   p @split_words = @word.split_word
     @incorrect_guess = 0
-    @@length = @split_words.length
-    make_dashes
   end
 
   # To make array occurs dashes(_____)
@@ -50,7 +44,7 @@ class Game
     else
       @incorrect_guess += 1
       puts "You did #{@incorrect_guess} incorrect guess."
-      return false
+      false
     end
   end
 
@@ -70,7 +64,7 @@ class Game
       @split_words = loaded_game.split_words
       @chosen_word = loaded_game.chosen_word
       @incorrect_guess = loaded_game.incorrect_guess
-      @@length = loaded_game.length
+      @length = loaded_game.length
 
       p @chosen_word
       p @guess_array
@@ -81,7 +75,7 @@ class Game
   # This method takes input, If save written, save game and exit
   def take_guess
     puts 'Please enter a valid guess [a-z]'
-    puts "You have #{@@length} guess right"
+    puts "You have #{@length} guess right"
     @guess = gets.chomp.downcase
     puts 'Write \'save\' if you want to save the game.'
     if @guess == 'save'
@@ -96,13 +90,25 @@ class Game
   # Main algorithm to check our guess inputs.
   def guess
     print_dashes
-    counter = 0
-    until counter == @@length || finished? == true
+    until @length.zero? || finished? == true
       take_guess
-     @@length -= 1 if !check_guess(@guess) 
-      counter += 1 
+      @length -= 1 if !check_guess(@guess)
       print_dashes
     end
+
+    if @length.zero?
+      puts 'You lost !'
+      puts "The word is #{@chosen_word.capitalize}"
+    else
+      puts 'You won !'
+    end
+  end
+
+  def choose_word
+    @chosen_word = @word.make_word
+    @split_words = @word.split_word
+    @length = @split_words.length
+    make_dashes
   end
 
   # play method to play game.
@@ -112,6 +118,7 @@ class Game
     @game = gets.chomp.downcase.to_i
     case @game
     when 1
+      choose_word
       guess
     when 2
       deserialize

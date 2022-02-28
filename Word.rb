@@ -14,7 +14,7 @@ class Word
     @dictionary.flatten!
   end
 
-  def chose_word
+  def make_word
     make_dictionary
     @word = @dictionary.select { |word| word.length >= 5 && word.length <= 12 }.sample
   end
