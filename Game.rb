@@ -5,12 +5,13 @@ require 'json'
 class Game
   attr_reader :length, :incorrect_guess, :word, :split_words, :chosen_word, :guess_array
 
+  @@length = 0
   def initialize
     @word = Word.new
-   p @chosen_word = @word.chose_word
+    @chosen_word = @word.chose_word
    p @split_words = @word.split_word
     @incorrect_guess = 0
-    @length = @split_words.length
+    @@length = @split_words.length
     make_dashes
   end
 
@@ -49,6 +50,7 @@ class Game
     else
       @incorrect_guess += 1
       puts "You did #{@incorrect_guess} incorrect guess."
+      return false
     end
   end
 
@@ -68,7 +70,7 @@ class Game
       @split_words = loaded_game.split_words
       @chosen_word = loaded_game.chosen_word
       @incorrect_guess = loaded_game.incorrect_guess
-      @length = loaded_game.length
+      @@length = loaded_game.length
 
       p @chosen_word
       p @guess_array
@@ -79,7 +81,7 @@ class Game
   # This method takes input, If save written, save game and exit
   def take_guess
     puts 'Please enter a valid guess [a-z]'
-    puts "You have #{@length} guess right"
+    puts "You have #{@@length} guess right"
     @guess = gets.chomp.downcase
     puts 'Write \'save\' if you want to save the game.'
     if @guess == 'save'
@@ -95,11 +97,10 @@ class Game
   def guess
     print_dashes
     counter = 0
-    until counter == @split_words.length || finished? == true
+    until counter == @@length || finished? == true
       take_guess
-      check_guess(@guess)
-      counter += 1
-      @length -= 1
+     @@length -= 1 if !check_guess(@guess) 
+      counter += 1 
       print_dashes
     end
   end

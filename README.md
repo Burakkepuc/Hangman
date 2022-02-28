@@ -1,6 +1,8 @@
 # Hangman
 
-This project is part of the [The Odin Project's](https://www.theodinproject.com/paths/full-stack-ruby-on-rails/courses/ruby-programming/lessons/hangman)
+This project is part of the [The Odin Project's](https://www.theodinproject.com/paths/full-stack-ruby-on-rails/courses/ruby-programming/lessons/hangman) Ruby curcillium.
+
+To
 
 ## Assignments
 
