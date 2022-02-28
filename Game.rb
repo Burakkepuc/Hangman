@@ -109,7 +109,6 @@ class Game
     puts '1) New Game'
     puts '2) Load Game'
     @game = gets.chomp.downcase.to_i
-
     case @game
     when 1
       guess
